@@ -67,7 +67,7 @@ export type AmenityIconName =
   | "landmark"
   | "sparkles";
 
-export type AmenityItem = { icon: AmenityIconName; label: string };
+export type AmenityItem = { icon: AmenityIconName | `/${string}`; label: string };
 
 export type Project = {
   slug: string;
@@ -315,10 +315,10 @@ export const projects: Project[] = [
     connectivityCategoryOrder: AVIRA_CATEGORY_ORDER,
     /* grounded in Avira's own clubhouseSpaces list below, no invented amenities */
     amenityItems: [
-      { icon: "armchair", label: "Reception Lobby" },
-      { icon: "sparkles", label: "Sky Lounge" },
-      { icon: "waves", label: "Infinity Pool Deck" },
-      { icon: "clapperboard", label: "Mini Theatre" },
+      { icon: "armchair", label: "Arrival Court" },
+      { icon: "sparkles", label: "Paved Area for Stargazing" },
+      { icon: "waves", label: "Swimming Pool" },
+      { icon: "/amphitheatre-icon.png", label: "Mini Amphitheatre" },
       { icon: "dumbbell", label: "Gym" },
       { icon: "landmark", label: "Guest Rooms" },
     ],

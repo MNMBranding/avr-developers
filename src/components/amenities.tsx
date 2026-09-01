@@ -74,18 +74,38 @@ export function Amenities({
 
       <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3">
         {list.map(({ icon, label }) => {
-          const Icon = ICONS[icon];
+          const isImageIcon = icon.startsWith("/");
+          const Icon = isImageIcon ? null : ICONS[icon as AmenityIconName];
           return (
             <li
               key={label}
               className="group flex flex-col items-center gap-5 text-center"
             >
-              <Icon
-                size={44}
-                strokeWidth={1.4}
-                className="text-accent transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:group-hover:scale-110"
-                aria-hidden
-              />
+              {isImageIcon ? (
+                <span
+                  aria-hidden
+                  className="inline-block h-[52px] w-[52px] bg-accent transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:group-hover:scale-110"
+                  style={{
+                    WebkitMaskImage: `url(${icon})`,
+                    WebkitMaskSize: "contain",
+                    WebkitMaskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                    maskImage: `url(${icon})`,
+                    maskSize: "contain",
+                    maskRepeat: "no-repeat",
+                    maskPosition: "center",
+                  }}
+                />
+              ) : (
+                Icon && (
+                  <Icon
+                    size={44}
+                    strokeWidth={1.4}
+                    className="text-accent transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] lg:group-hover:scale-110"
+                    aria-hidden
+                  />
+                )
+              )}
               <span className="max-w-[16ch] text-[15px] font-medium leading-snug text-ink">
                 {label}
               </span>
