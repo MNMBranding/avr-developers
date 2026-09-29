@@ -91,6 +91,12 @@ export type Project = {
   logo?: string;
   /* sales brochure PDF, offered for download after a matching "Interested in" submission on the contact form */
   brochure?: string;
+  /* first page of the brochure, shown as a booklet in the brochure CTA section */
+  brochureCover?: string;
+  brochurePages?: number;
+  /* colours of the two blocks stacked behind the brochure cover (desktop), taken
+     from the brochure itself; falls back to the site's rose and navy when unset */
+  brochureBlocks?: { front: string; back: string };
   /* card/hero thumbnail, local path under /public */
   image: string;
   /* real photography, when available; falls back to `image` when absent */
@@ -297,6 +303,8 @@ export const projects: Project[] = [
     ],
     logo: "/avira/Avira_logo_new.svg",
     brochure: "/avira/AviraBrochure_web.pdf",
+    brochureCover: "/avira/avira-brochure-cover.webp",
+    brochurePages: 36,
     image: "/projects/avira-project-card.webp",
     heroImage: "/avira/avira-hero.webp",
     heroImageMobile:"/avira/avira-hero-mobile.webp",
@@ -396,6 +404,9 @@ export const projects: Project[] = [
     ],
     logo: "/evania/Evania-new.svg",
     brochure: "/evania/Evania_Brochure.PDF",
+    brochureCover: "/evania/evania-brochure-cover.webp",
+    brochurePages: 42,
+    brochureBlocks: { front: "#f48434", back: "#343434" },
     image: "/projects/evania-project-card.webp",
     heroImage: "/evania/evania-hero.webp",
     heroImageMobile:"/evania/evania-hero-mobile.webp",

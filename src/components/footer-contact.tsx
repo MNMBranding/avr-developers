@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { site } from "@/lib/site";
+import { projects, site } from "@/lib/site";
 
 /* code-split out of every route's bundle, react-phone-input-2 is only
    needed once this footer block actually renders */
@@ -19,6 +19,9 @@ const ContactForm = dynamic(() =>
 export function FooterContact() {
   const pathname = usePathname();
   if (pathname === "/contact" || pathname === "/careers") return null;
+
+  // on a project page, preselect that project in "Interested in"
+  const project = projects.find((p) => pathname === `/${p.slug}`);
 
   return (
     <div
@@ -60,7 +63,7 @@ export function FooterContact() {
           ))}
         </dl>
       </div>
-      <ContactForm />
+      <ContactForm defaultInterest={project?.name} />
     </div>
   );
 }

@@ -39,19 +39,23 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * applications routing separately from project leads); falls back to the
  * site-wide default. `interestPlaceholder`, when set, starts the dropdown
  * unselected (showing that text) instead of defaulting to the first option,
- * and requires an explicit pick before submit.
+ * and requires an explicit pick before submit. `defaultInterest` preselects
+ * an option (e.g. the project whose page the footer form is on) and follows
+ * it when the page changes.
  */
 export function ContactForm({
   bare = false,
   interestOptions = INTEREST_OPTIONS,
   interestLabel = "Interested in",
   interestPlaceholder,
+  defaultInterest,
   webhookUrl = process.env.NEXT_PUBLIC_PABBLY_WEBHOOK_URL,
 }: {
   bare?: boolean;
   interestOptions?: readonly string[];
   interestLabel?: string;
   interestPlaceholder?: string;
+  defaultInterest?: string;
   webhookUrl?: string;
 } = {}) {
   const router = useRouter();
@@ -60,7 +64,16 @@ export function ContactForm({
   const [phone, setPhone] = useState("");
   const [dialCode, setDialCode] = useState("91");
   const [countryCode, setCountryCode] = useState("in");
-  const [interest, setInterest] = useState<string>(interestPlaceholder ? "" : interestOptions[0]);
+  const [interest, setInterest] = useState<string>(
+    defaultInterest ?? (interestPlaceholder ? "" : interestOptions[0]),
+  );
+  // the footer form stays mounted across client-side navigation, so follow
+  // the page when it moves from one project to another
+  const [prevDefaultInterest, setPrevDefaultInterest] = useState(defaultInterest);
+  if (defaultInterest !== prevDefaultInterest) {
+    setPrevDefaultInterest(defaultInterest);
+    if (defaultInterest) setInterest(defaultInterest);
+  }
   const [interestOpen, setInterestOpen] = useState(false);
   const interestRef = useRef<HTMLDivElement>(null);
   const phoneFieldRef = useRef<HTMLDivElement>(null);

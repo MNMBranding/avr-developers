@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { ProjectGallery } from "@/components/project-gallery";
 import { Amenities } from "@/components/amenities";
@@ -171,6 +172,74 @@ export function ProjectPage({ project }: { project: Project }) {
       {project.floorPlans?.length ? (
         <FloorPlans heading={project.floorPlansHeading} plans={project.floorPlans} />
       ) : null}
+
+      {/* brochure CTA: scrolls to the footer enquiry form (#contact), which
+          downloads the brochure on submit, keeping it behind the lead form */}
+      {project.brochure && (
+        <section id="brochure" className="border-t border-line">
+          <div className="mx-auto grid max-w-[1400px] items-center gap-12 px-5 py-14 md:grid-cols-12 md:gap-16 lg:max-w-none lg:grid-cols-2 lg:items-stretch lg:gap-0 lg:p-0">
+            {/* brochure cover as a slightly tilted booklet, two paper sheets behind it;
+                on desktop, solid rose and navy blocks are offset behind it like layered paper */}
+            {project.brochureCover && (
+              <Reveal className="md:col-span-5 lg:col-span-1 lg:flex lg:items-center lg:justify-center lg:py-24">
+                <div className="group relative mx-auto aspect-[11/16] w-[min(300px,78%)] lg:w-[min(340px,70%)]">
+                  <div
+                    className="absolute -left-[24%] -top-[8%] hidden h-[78%] w-[92%] rounded-xs bg-rose lg:block"
+                    style={project.brochureBlocks && { backgroundColor: project.brochureBlocks.front }}
+                  />
+                  <div
+                    className="absolute -bottom-[10%] -right-[26%] hidden h-[58%] w-[72%] rounded-xs bg-ink lg:block"
+                    style={project.brochureBlocks && { backgroundColor: project.brochureBlocks.back }}
+                  />
+                  <div className="absolute inset-0 translate-x-2.5 translate-y-2 rotate-3 rounded-r-sm bg-[#ddd6c9]" />
+                  <div className="absolute inset-0 translate-x-1 translate-y-1 rotate-[1.5deg] rounded-r-sm bg-[#efe9df]" />
+                  <div className="absolute inset-0 -rotate-3 overflow-hidden rounded-r-sm shadow-[0_30px_50px_-20px_rgba(23,35,59,0.55)] transition-transform duration-700 ease-luxe motion-reduce:transition-none lg:group-hover:-translate-y-1.5 lg:group-hover:rotate-0">
+                    <Image
+                      src={project.brochureCover}
+                      alt={`${project.name} brochure cover`}
+                      title={`${project.name} brochure cover`}
+                      fill
+                      sizes="340px"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-y-0 left-0 w-2.5 bg-gradient-to-r from-black/35 to-transparent" />
+                  </div>
+                </div>
+              </Reveal>
+            )}
+            <Reveal index={1} className={`lg:self-center lg:px-16 lg:py-24 xl:px-24 ${project.brochureCover ? "md:col-span-7 lg:col-span-1" : "md:col-span-12 lg:col-span-2"}`}>
+              <p className="caps mb-4 text-[12px] font-medium text-accent">
+                Brochure
+              </p>
+              <h2 className="font-serif text-3xl font-light leading-[1.08] md:text-5xl">
+                See every detail, page by page.
+              </h2>
+              <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-ink-70">
+                Floor plans, specifications, amenities and location, all in one booklet.
+              </p>
+              <p className="mb-8 mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] tabular-nums text-ink-70">
+                <span>{project.name} brochure</span>
+                {project.brochurePages && (
+                  <>
+                    <span className="size-1 rounded-full bg-rose" />
+                    <span>{project.brochurePages} pages</span>
+                  </>
+                )}
+                <span className="size-1 rounded-full bg-rose" />
+                <span>PDF</span>
+              </p>
+              {/* scrolls to the footer enquiry form; the PDF downloads after submit */}
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-3 rounded-sm bg-accent px-7 py-4 text-[13px] font-medium uppercase tracking-[0.1em] text-white transition-colors lg:hover:bg-accent-dark"
+              >
+                <DownloadSimple size={16} weight="bold" />
+                Download Brochure
+              </a>
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* gallery (full-bleed carousel) */}
       <div id="gallery" className="scroll-mt-32 border-t border-line">
