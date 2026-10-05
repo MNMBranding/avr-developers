@@ -1,4 +1,4 @@
-export const INTEREST_OPTIONS = ["Evania", "Avira"] as const;
+export const INTEREST_OPTIONS = ["Evania", "Avira", "General Enquiry"] as const;
 export type Interest = (typeof INTEREST_OPTIONS)[number];
 
 export const JOB_LISTINGS = [

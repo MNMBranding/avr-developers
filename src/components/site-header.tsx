@@ -11,7 +11,7 @@ import { scrollToTop } from "@/lib/scroll";
 /* Routes whose page renders a transparent hero (id="hero") under the header.
    Blog articles (/blog/[slug]) are handled separately below since their
    pathname isn't known statically. */
-const HERO_ROUTES = new Set(["/", "/about", ...projects.map((p) => `/${p.slug}`)]);
+const HERO_ROUTES = new Set(["/", "/about", "/projects", ...projects.map((p) => `/${p.slug}`)]);
 
 /* Real AVR logo. Two variants crossfade with the header state: the navy
    mark over the solid canvas bar, the white mark over the hero. */
@@ -134,7 +134,7 @@ function TopItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
               <Link
                 href={child.href}
                 onClick={dismiss}
-                className="flex items-center justify-center gap-4 rounded-sm px-4 py-3 font-sans text-[15px] transition-colors lg:hover:bg-canvas lg:hover:text-accent group-focus-within/sub:bg-canvas text-center w-full"
+                className="flex items-center justify-center gap-4 rounded-sm px-4 py-3 font-sans text-[15px] transition-colors lg:hover:bg-canvas lg:hover:text-accent group-focus-within/sub:bg-canvas text-center w-full whitespace-nowrap"
               >
                 {child.label}
                 {child.children && (

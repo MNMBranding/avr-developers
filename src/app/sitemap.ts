@@ -4,7 +4,7 @@ import { blogPosts } from "@/lib/blog-posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const routes = ["", "/about", "/blog", "/careers", "/contact", "/privacy-policy"];
+  const routes = ["", "/projects", "/about", "/blog", "/careers", "/contact", "/privacy-policy"];
 
   return [
     ...routes.map((path) => ({

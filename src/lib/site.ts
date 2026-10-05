@@ -382,9 +382,9 @@ export const projects: Project[] = [
     /* building render, sits below the About heading */
     aboutImage: "/about/about-evania.webp",
     highlights: [
-      { label: "1 MIN TO ORR" },
+      { value: "1", label: "MIN TO ORR" },
       { value: "102", label: "Residences" },
-      { label: "2 - LEVEL CLUBHOUSE" },
+      { value: "2", label: "LEVEL CLUBHOUSE" },
     ],
     /* Evania's real amenity set, from avrdevelopers.com/about-project. 18,000 sq ft Club Evania. */
     amenityItems: [
@@ -446,6 +446,26 @@ export const projects: Project[] = [
   },
 ];
 
+/* Upcoming commercial projects, listed on /projects only. Kept out of
+   `projects` above until they have their own page, so they don't show up in
+   the homepage cards, footer, sitemap or contact-form interests. */
+export type CommercialProject = {
+  name: string;
+  status: "Coming Soon";
+  blurb: string;
+  image: string;
+};
+
+export const commercialProjects: CommercialProject[] = [
+  {
+    name: "Aroha",
+    status: "Coming Soon",
+    blurb:
+      "Our first commercial development is on its way. Register your interest to be among the first to hear when Aroha launches.",
+    image: "/projects/aroha.webp",
+  },
+];
+
 export type NavItem = {
   label: string;
   href: string;
@@ -459,7 +479,10 @@ export const nav: { left: NavItem[]; right: NavItem[] } = {
     {
       label: "Projects",
       href: "/projects",
-      children: projects.map((p) => ({ label: p.name, href: `/${p.slug}` })),
+      children: [
+        ...projects.map((p) => ({ label: p.name, href: `/${p.slug}` })),
+        { label: "View All Projects", href: "/projects" },
+      ],
     },
     { label: "About Us", href: "/about" },
   ],

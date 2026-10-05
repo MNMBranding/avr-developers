@@ -9,6 +9,7 @@ export function CoverImage({
   className = "",
   imageClassName = "",
   priority = false,
+  loading,
 }: {
   src: string;
   mobileSrc?: string;
@@ -18,6 +19,7 @@ export function CoverImage({
   className?: string;
   imageClassName?: string;
   priority?: boolean;
+  loading?: "lazy" | "eager";
 }) {
   return (
     <div className={`relative overflow-hidden ${className}`}>
@@ -28,6 +30,7 @@ export function CoverImage({
         title={title}
         sizes={sizes}
         priority={priority}
+        loading={loading}
         className={`object-cover ${imageClassName}`}
       />
     </div>
