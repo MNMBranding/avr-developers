@@ -161,9 +161,6 @@ export function ProjectCategories() {
                   /* the render's own ratio, so the whole building shows uncropped */
                   className="aspect-[1380/1352]"
                 />
-                <span className="caps absolute left-4 top-4 z-10 rounded-xs bg-accent px-2.5 py-1 text-[10px] font-medium text-white">
-                  {project.status}
-                </span>
               </div>
 
               <div className="flex flex-col justify-center gap-5 p-6 sm:p-10 lg:p-12">
@@ -174,17 +171,12 @@ export function ProjectCategories() {
                 <p className="max-w-[46ch] text-[14.5px] leading-relaxed text-white/75">
                   {project.blurb}
                 </p>
-                <Link
-                  href="/contact"
-                  className="group mt-2 inline-flex items-center gap-3 self-start rounded-sm bg-accent px-7 py-4 text-[13px] font-medium uppercase tracking-[0.1em] text-white transition-colors lg:hover:bg-accent-dark"
+                <span
+                  aria-disabled="true"
+                  className="mt-2 inline-flex cursor-not-allowed select-none items-center self-start rounded-sm bg-white/10 px-7 py-4 text-[13px] font-medium uppercase tracking-[0.1em] text-white/45"
                 >
-                  Register Interest
-                  <ArrowRight
-                    size={16}
-                    weight="bold"
-                    className="transition-transform duration-300 lg:group-hover:translate-x-1"
-                  />
-                </Link>
+                  {project.status}
+                </span>
               </div>
             </article>
           ))}
