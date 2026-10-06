@@ -461,7 +461,7 @@ export const commercialProjects: CommercialProject[] = [
     name: "Aroha",
     status: "Coming Soon",
     blurb:
-      "Our first commercial development is on its way. Register your interest to be among the first to hear when Aroha launches.",
+      "AROHA is all set to take shape as a new commercial destination, bringing together a distinctive address, thoughtful design and endless possibilities for businesses and ambitions that come next.",
     image: "/projects/aroha.webp",
   },
 ];
