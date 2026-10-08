@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { projects, site } from "@/lib/site";
+import { projectPath, projects, site } from "@/lib/site";
 
 /* code-split out of every route's bundle, react-phone-input-2 is only
    needed once this footer block actually renders */
@@ -15,13 +15,16 @@ const ContactForm = dynamic(() =>
  * primary form near the top of the page) and /careers (which has its own
  * dedicated CareersContact form with a job-listing dropdown instead of a
  * project one), so the form never appears twice with the wrong options.
+ * Also hidden on Aroha's page, which is only a coming-soon banner.
  */
 export function FooterContact() {
   const pathname = usePathname();
-  if (pathname === "/contact" || pathname === "/careers") return null;
+  if (pathname === "/contact" || pathname === "/careers" || pathname === "/projects/commercial/aroha") {
+    return null;
+  }
 
   // on a project page, preselect that project in "Interested in"
-  const project = projects.find((p) => pathname === `/${p.slug}`);
+  const project = projects.find((p) => pathname === projectPath(p));
 
   return (
     <div

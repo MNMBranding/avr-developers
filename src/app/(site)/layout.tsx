@@ -16,7 +16,9 @@ export default function SiteLayout({
   return (
     <div className="flex min-h-dvh flex-col">
       <SiteHeader />
-      <main className="flex-1">{children}</main>
+      {/* a page whose content is shorter than the screen can mark itself
+          data-fill-ink so the stretched leftover space matches it */}
+      <main className="flex-1 has-[[data-fill-ink]]:bg-ink">{children}</main>
       <SiteFooter />
     </div>
   );

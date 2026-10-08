@@ -3,7 +3,7 @@ import { FooterContact } from "@/components/footer-contact";
 import { FooterFaq } from "@/components/footer-faq";
 import { FooterLogo } from "@/components/footer-logo";
 import { SocialIcons } from "@/components/social-icons";
-import { nav, projects, site } from "@/lib/site";
+import { nav, projectPath, projects, site } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -26,10 +26,11 @@ export function SiteFooter() {
 
           <FooterCol title="Projects">
             {projects.map((p) => (
-              <FooterLink key={p.slug} href={`/${p.slug}`}>
+              <FooterLink key={p.slug} href={projectPath(p)}>
                 {p.name}
               </FooterLink>
             ))}
+            <FooterLink href="/projects/commercial">Commercial Projects</FooterLink>
           </FooterCol>
 
           <FooterCol title="Company">

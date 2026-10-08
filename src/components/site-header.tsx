@@ -5,13 +5,21 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CaretDown, CaretRight, List, Phone, X } from "@phosphor-icons/react";
-import { nav, projects, site } from "@/lib/site";
+import { commercialProjectPath, commercialProjects, nav, projectPath, projects, site } from "@/lib/site";
 import { scrollToTop } from "@/lib/scroll";
 
 /* Routes whose page renders a transparent hero (id="hero") under the header.
    Blog articles (/blog/[slug]) are handled separately below since their
    pathname isn't known statically. */
-const HERO_ROUTES = new Set(["/", "/about", "/projects", ...projects.map((p) => `/${p.slug}`)]);
+const HERO_ROUTES = new Set([
+  "/",
+  "/about",
+  "/projects",
+  "/projects/residential",
+  "/projects/commercial",
+  ...projects.map(projectPath),
+  ...commercialProjects.map(commercialProjectPath),
+]);
 
 /* Real AVR logo. Two variants crossfade with the header state: the navy
    mark over the solid canvas bar, the white mark over the hero. */
@@ -103,9 +111,11 @@ function TopItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
       }}
     >
-      <button
+      {/* the label itself links to the parent page; the flyout opens on hover/focus */}
+      <Link
+        href={item.href}
+        aria-haspopup="true"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
         className={`caps inline-flex items-center gap-1 py-2 text-[12.5px] font-medium transition-colors ${
           open ? "text-accent" : ""
         }`}
@@ -118,7 +128,7 @@ function TopItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
             open ? "rotate-180" : ""
           }`}
         />
-      </button>
+      </Link>
 
       {/* first-level panel */}
       <div
@@ -390,20 +400,26 @@ function MobileNavItem({
 
   return (
     <div>
-      <button
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        className="flex w-full items-center justify-between py-4 font-sans text-2xl"
-      >
-        {item.label}
-        <CaretDown
-          size={18}
-          weight="bold"
-          className={`text-ink-40 transition-transform duration-300 ${
-            expanded ? "rotate-180" : ""
-          }`}
-        />
-      </button>
+      {/* label goes to the parent page, the caret toggles the sub-list */}
+      <div className="flex items-center justify-between">
+        <Link href={item.href} onClick={onClose} className="block py-4 font-sans text-2xl">
+          {item.label}
+        </Link>
+        <button
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          aria-label={`${expanded ? "Hide" : "Show"} ${item.label} links`}
+          className="-mr-3 flex size-12 items-center justify-center"
+        >
+          <CaretDown
+            size={18}
+            weight="bold"
+            className={`text-ink-40 transition-transform duration-300 ${
+              expanded ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+      </div>
       <div
         className={`grid transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"

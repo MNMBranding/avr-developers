@@ -7,6 +7,17 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return[
+      /* project pages moved under their category on 2026-10-08 */
+      {
+        source: "/avira",
+        destination: "/projects/residential/avira",
+        permanent: true,
+      },
+      {
+        source: "/evania",
+        destination: "/projects/residential/evania",
+        permanent: true,
+      },
       {
         source: "/about-us",
         destination: "/about",

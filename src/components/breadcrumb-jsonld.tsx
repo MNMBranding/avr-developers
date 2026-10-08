@@ -3,7 +3,7 @@ import { site } from "@/lib/site";
 /**
  * BreadcrumbList JSON-LD for the trail leading to *this* page (Home is
  * implicit and always position 1). Each page passes only its own segment(s),
- * e.g. `[{ name: "Evania", path: "/evania" }]`, so the schema always matches
+ * e.g. `[{ name: "Contact", path: "/contact" }]`, so the schema always matches
  * the page it's on rather than listing the whole site's nav.
  */
 export function BreadcrumbJsonLd({

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { ArrowUpRight, Check } from "@phosphor-icons/react";
 import { CoverImage } from "./ui/cover-image";
-import type { Project } from "@/lib/site";
+import { projectPath, type Project } from "@/lib/site";
 
 type Gsap = typeof import("gsap")["gsap"];
 
@@ -108,7 +108,7 @@ export function ProjectsMobileCarousel({ projects }: { projects: Project[] }) {
   return (
     <div className="lg:hidden">
       <Link
-        href={`/${project.slug}`}
+        href={projectPath(project)}
         className="group relative block"
       >
         <div className="relative">

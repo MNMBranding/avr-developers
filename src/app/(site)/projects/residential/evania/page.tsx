@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Evania Kokapet Apartments | 3.5 & 4 BHK Flats for Sale",
   description:
     "Explore Evania by AVR ,featuring premium 3.5 & 4 BHK luxury apartments in Kokapet with spacious homes, modern amenities and luxury living.Book site visit!",
-  alternates: { canonical: "/evania" },
+  alternates: { canonical: "/projects/residential/evania" },
   keywords:["EVANIA by AVR","EVANIA Kokapet","luxury apartments in Kokapet","3.5 BHK flats in Kokapet","4 BHK flats in Kokapet","flats for sale in Kokapet"],
 };
 

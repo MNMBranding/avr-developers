@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "3 & 3.5 BHK Luxury Flats for Sale in Kokapet | Avira",
   description:
     "Discover premium living at Avira in Kokapet. Spacious 3 & 3.5 BHK luxury apartments near Financial District, Hyderabad. Schedule your site visit today!",
-  alternates: { canonical: "/avira" },
+  alternates: { canonical: "/projects/residential/avira" },
   keywords:["3.5bhk flats for sale","3bhk apartments","apartments in kokapet"],
 };
 

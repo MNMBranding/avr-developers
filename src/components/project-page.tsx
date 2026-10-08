@@ -9,7 +9,7 @@ import { FloorPlans } from "@/components/floor-plans";
 import { LocationSection } from "@/components/location-section";
 import { Reveal } from "@/components/ui/reveal";
 import { ResponsiveImage } from "@/components/ui/responsive-image";
-import { site, type Project } from "@/lib/site";
+import { projectPath, site, type Project } from "@/lib/site";
 import { withBreaks, paragraphs } from "@/lib/with-breaks";
 
 export function ProjectPage({ project }: { project: Project }) {
@@ -18,7 +18,7 @@ export function ProjectPage({ project }: { project: Project }) {
     "@type": "Residence",
     name: `${project.name} by ${site.name}`,
     description: project.blurb,
-    url: `${site.url}/${project.slug}`,
+    url: `${site.url}${projectPath(project)}`,
     address: {
       "@type": "PostalAddress",
       addressLocality: site.address.locality,
@@ -34,7 +34,13 @@ export function ProjectPage({ project }: { project: Project }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(residenceJsonLd) }}
       />
-      <BreadcrumbJsonLd items={[{ name: project.name, path: `/${project.slug}` }]} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Projects", path: "/projects" },
+          { name: "Residential", path: "/projects/residential" },
+          { name: project.name, path: projectPath(project) },
+        ]}
+      />
 
       {/* hero */}
       <section

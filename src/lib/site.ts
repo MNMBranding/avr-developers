@@ -75,7 +75,7 @@ export type Project = {
   name: string;
   /* big hero headline on the project page; falls back to `name` when unset. Use "|" to force a line break, e.g. "Line one|Line two" */
   headline?: string;
-  status: "Ongoing" | "Completed";
+  status: "Ongoing" | "Completed" | "Coming Soon";
   configuration: string;
   rera?: string;
   /* short teaser, homepage hover card + SEO/JSON-LD description. Keep it brief. */
@@ -446,25 +446,38 @@ export const projects: Project[] = [
   },
 ];
 
-/* Upcoming commercial projects, listed on /projects only. Kept out of
+/* Upcoming commercial projects, listed on /projects/commercial. Kept out of
    `projects` above until they have their own page, so they don't show up in
    the homepage cards, footer, sitemap or contact-form interests. */
 export type CommercialProject = {
+  slug: string;
   name: string;
   status: "Coming Soon";
+  /* false keeps the project's own page (/projects/commercial/<slug>) hidden:
+     it 404s and stays out of the sitemap. Flip to true to publish it. */
+  pageLive: boolean;
   blurb: string;
   image: string;
 };
 
 export const commercialProjects: CommercialProject[] = [
   {
+    slug: "aroha",
     name: "Aroha",
     status: "Coming Soon",
+    pageLive: false,
     blurb:
       "AROHA is all set to take shape as a new commercial destination, bringing together a distinctive address, thoughtful design and endless possibilities for businesses and ambitions that come next.",
-    image: "/projects/aroha.webp",
+    image: "/projects/aroha-render.webp",
   },
 ];
+
+/* Project page URLs, nested under their category: /projects/residential/avira,
+   /projects/commercial/aroha. Every link to a project page goes through these. */
+export const projectPath = (project: Pick<Project, "slug">) =>
+  `/projects/residential/${project.slug}`;
+export const commercialProjectPath = (project: Pick<CommercialProject, "slug">) =>
+  `/projects/commercial/${project.slug}`;
 
 export type NavItem = {
   label: string;
@@ -480,8 +493,8 @@ export const nav: { left: NavItem[]; right: NavItem[] } = {
       label: "Projects",
       href: "/projects",
       children: [
-        ...projects.map((p) => ({ label: p.name, href: `/${p.slug}` })),
-        { label: "View All Projects", href: "/projects" },
+        { label: "Residential", href: "/projects/residential" },
+        { label: "Commercial", href: "/projects/commercial" },
       ],
     },
     { label: "About Us", href: "/about" },

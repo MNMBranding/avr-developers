@@ -6,7 +6,7 @@ import { CoverImage } from "../ui/cover-image";
 import { ArrowUpRight, Check } from "@phosphor-icons/react";
 import { Reveal } from "../ui/reveal";
 import { ProjectsMobileCarousel } from "../projects-mobile-carousel";
-import { projects } from "@/lib/site";
+import { projectPath, projects } from "@/lib/site";
 
 export function ProjectsFeature() {
   const [hovered, setHovered] = useState<string | null>(null);
@@ -73,7 +73,7 @@ export function ProjectsFeature() {
           {projects.map((project, i) => (
             <Reveal key={project.slug} index={i}>
               <Link
-                href={`/${project.slug}`}
+                href={projectPath(project)}
                 className="group relative block"
                 onMouseEnter={() => setHovered(project.slug)}
                 onMouseLeave={() => setHovered(null)}
