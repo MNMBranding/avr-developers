@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/about-project",
-        destination: "/",
+        destination: "/projects",
         permanent: true,
       },
       {
@@ -67,6 +67,36 @@ const nextConfig: NextConfig = {
         source: "/layouts/header-simple-classic-grid",
         destination: "/",
         permanent: true,
+      },
+      {
+        source:"/home",
+        destination:"/",
+        permanent:true,
+      },
+      {
+        source:"/search/%7bsearch_term_string%7d",
+        destination:"/",
+        permanent:true,
+      },
+      {
+        source:"/:file(wp-.*\\.php)",
+        destination:"/",
+        permanent:true,
+      },
+      {
+        source:"/layouts/footer-modern",
+        destination:"/",
+        permanent:true,
+      },
+      {
+        source:"/wp-content/:path*",
+        destination:"/",
+        permanent:true,
+      },
+      {
+        source:"/wp-admin/:path*",
+        destination:"/",
+        permanent:true,
       }
     ];
   },
