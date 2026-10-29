@@ -169,6 +169,35 @@ export function ContactForm({
         }),
       ]);
 
+      // Track conversion event for Google Tag Manager & Google Ads
+      if (typeof window !== "undefined") {
+        const sourcePath = window.location.pathname;
+        const formSource = webhookUrl === process.env.NEXT_PUBLIC_PABBLY_WEBHOOK_URL_CAREERS ? "careers" : "contact";
+
+        const w = window as unknown as {
+          dataLayer?: Record<string, unknown>[];
+          gtag?: (command: string, action: string, params?: Record<string, unknown>) => void;
+        };
+
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({
+          event: "lead_form_submission",
+          form_name: "Contact Lead Form",
+          page_path: sourcePath,
+          interest: interest || "General",
+          form_source: formSource,
+        });
+
+        if (typeof w.gtag === "function") {
+          w.gtag("event", "generate_lead", {
+            event_category: "Lead Form",
+            event_label: interest || "General",
+            page_path: sourcePath,
+            form_source: formSource,
+          });
+        }
+      }
+
       const brochure = projects.find((p) => p.name === interest)?.brochure;
       if (brochure) {
         const link = document.createElement("a");
@@ -179,7 +208,11 @@ export function ContactForm({
         link.remove();
       }
 
-      router.push(`/thank-you?interest=${encodeURIComponent(interest)}`);
+      const sourceSlug = typeof window !== "undefined" && window.location.pathname !== "/"
+        ? window.location.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-")
+        : "home";
+
+      router.push(`/thank-you?interest=${encodeURIComponent(interest)}&source=${encodeURIComponent(sourceSlug)}`);
     } catch {
       setStatus("error");
     }

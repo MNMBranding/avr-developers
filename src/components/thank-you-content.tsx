@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -13,7 +14,34 @@ import { projects } from "@/lib/site";
  * re-download alongside the automatic one the form already triggered. */
 export function ThankYouContent() {
   const params = useSearchParams();
-  const project = projects.find((p) => p.name === params.get("interest"));
+  const interestParam = params.get("interest") || "";
+  const sourceParam = params.get("source") || "direct";
+  const project = projects.find((p) => p.name === interestParam);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const w = window as unknown as {
+        dataLayer?: Record<string, unknown>[];
+        gtag?: (command: string, action: string, params?: Record<string, unknown>) => void;
+      };
+
+      w.dataLayer = w.dataLayer || [];
+      w.dataLayer.push({
+        event: "thank_you_page_view",
+        page_source: sourceParam,
+        interest: interestParam,
+      });
+
+      if (typeof w.gtag === "function") {
+        w.gtag("event", "page_view", {
+          page_title: "Thank You",
+          page_location: window.location.href,
+          page_source: sourceParam,
+          interest: interestParam,
+        });
+      }
+    }
+  }, [sourceParam, interestParam]);
 
   const body = project
     ? `Your interest in ${project.name} has been recorded. Our relationship manager will be in touch shortly to curate your private viewing experience.`
@@ -21,6 +49,14 @@ export function ThankYouContent() {
 
   return (
     <section className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden px-5 py-24 text-center">
+      {/* Hidden conversion marker with unique ID, class, and data attributes for DOM/Element-Visibility tracking */}
+      <div
+        id="conversion-tracking-lead"
+        className="landing-page-conversion sr-only"
+        data-source={sourceParam}
+        data-interest={interestParam}
+        aria-hidden="true"
+      />
       <div className="absolute inset-0">
         <CoverImage
           src="/contact/contact-us-hero.webp"
